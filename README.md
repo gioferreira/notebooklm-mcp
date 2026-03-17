@@ -351,6 +351,63 @@ Your docs are always current. No training cutoff. No hallucinations. Perfect for
 
 ---
 
+## Local Development
+
+If you want to contribute or run from source:
+
+```bash
+# Clone the repo
+git clone https://github.com/PleasePrompto/notebooklm-mcp.git
+cd notebooklm-mcp
+
+# Install dependencies
+npm install
+
+# Build (TypeScript → dist/)
+npm run build
+
+# Watch mode (auto-rebuilds on file changes)
+npm run dev
+```
+
+### Running locally with Claude Code
+
+Point your MCP config to the local build instead of the npm package:
+
+```json
+{
+  "mcpServers": {
+    "notebooklm": {
+      "command": "node",
+      "args": ["/absolute/path/to/notebooklm-mcp/dist/index.js"]
+    }
+  }
+}
+```
+
+Place this in `~/.claude/.mcp.json` for global access, or in your project's `.mcp.json` for project-specific use.
+
+> **Note:** After editing source files in `src/`, you need to run `npm run build` (or use `npm run dev` for watch mode) before changes take effect.
+
+### Project structure
+
+```
+src/
+├── index.ts              # Entry point, MCP server setup
+├── config.ts             # Configuration and environment variables
+├── types.ts              # Shared TypeScript types
+├── errors.ts             # Custom error classes
+├── tools/                # MCP tool definitions and handlers
+├── auth/                 # Google authentication and browser state
+├── session/              # Browser session management
+├── library/              # Notebook library (library.json) management
+├── resources/            # MCP resource definitions
+└── utils/                # Shared helpers
+dist/                     # Compiled output (git-ignored)
+```
+
+---
+
 ## Advanced Usage
 
 - 📖 [**Usage Guide**](./docs/usage-guide.md) — Patterns, workflows, tips
